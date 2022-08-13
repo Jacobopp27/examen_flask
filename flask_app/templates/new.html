@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Appointment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex justify-content-between align-items-center">
+            <h1>Add Appointment </h1>
+            <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+            <form action='/logout' method="post">
+                <input type="submit" value="Logout" class="btn btn-danger">
+            </form>
+        </header>
+            {% with messages = get_flashed_messages(category_filter=['task']) %}
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        <form action="/create/appointment" method="post">
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <div class="form-group">
+                <label for="name">Task</label>
+                <input type="text" id="task" name="task" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-control" min={{hoy}}>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input type="radio" name="status" id="statusD" value="0" checked>
+                <label for="statusD">Done</label> - 
+                <input type="radio" name="status" id="statusP" value="1">
+                <label for="statusP">Pending</label>
+                <input type="radio" name="status" id="statusM" value="2">
+                <label for="statusM">Missed</label>
+            </div>
+            <input type="submit" class="btn btn-success" value="create">
+        </form>
+    </div>
+</body>
+</html>
